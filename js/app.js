@@ -1,3 +1,5 @@
+import refs from "./refs.js";
+const { gallery, modal, lightbox, closeBtn, closeOverlay } = refs;
 const galleryItems = [
   {
     preview:
@@ -63,3 +65,51 @@ const galleryItems = [
     description: "Lighthouse Coast Sea",
   },
 ];
+const galleryImages = galleryMarkup(galleryItems);
+function galleryMarkup(array) {
+  return array
+    .map((image) => {
+      const { preview, original, description } = image;
+      return `<li class="gallery__item">
+    <a
+      class="gallery__link"
+      href=${original}
+    >
+      <img
+        class="gallery__image"
+        src=${preview}
+        data-source=${original}
+        alt=${description}
+      />
+    </a>
+  </li>
+`;
+    })
+    .join("");
+}
+gallery.insertAdjacentHTML("afterBegin", galleryImages);
+
+gallery.addEventListener("click", onGalleryImgClick);
+function onGalleryImgClick(e) {
+  if (!e.target.classList.contains("gallery__image")) {
+    return;
+  } else {
+    e.preventDefault();
+  }
+  modal.classList.add("is-open");
+  lightbox.src = e.target.dataset.source;
+  lightbox.alt = e.target.alt;
+}
+closeOverlay.addEventListener("click", modalClose);
+closeBtn.addEventListener("click", modalClose);
+function modalClose() {
+  modal.classList.remove("is-open");
+  lightbox.src = "";
+  lightbox.alt = "";
+}
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    modalClose();
+  }
+});

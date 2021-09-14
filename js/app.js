@@ -88,7 +88,9 @@ function galleryMarkup(array) {
     .join("");
 }
 gallery.insertAdjacentHTML("afterBegin", galleryImages);
-
+function setSrcAlt(src, alt) {
+  return;
+}
 gallery.addEventListener("click", onGalleryImgClick);
 function onGalleryImgClick(e) {
   if (!e.target.classList.contains("gallery__image")) {
@@ -97,15 +99,16 @@ function onGalleryImgClick(e) {
     e.preventDefault();
   }
   modal.classList.add("is-open");
-  lightbox.src = e.target.dataset.source;
-  lightbox.alt = e.target.alt;
+  setSrcAlt(
+    (lightbox.src = e.target.dataset.source),
+    (lightbox.alt = e.target.alt)
+  );
 }
 closeOverlay.addEventListener("click", modalClose);
 closeBtn.addEventListener("click", modalClose);
 function modalClose() {
   modal.classList.remove("is-open");
-  lightbox.src = "";
-  lightbox.alt = "";
+  setSrcAlt();
 }
 
 window.addEventListener("keydown", (e) => {

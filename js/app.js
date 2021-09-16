@@ -88,9 +88,7 @@ function galleryMarkup(array) {
     .join("");
 }
 gallery.insertAdjacentHTML("afterBegin", galleryImages);
-function setSrcAlt(src, alt) {
-  return;
-}
+function setSrcAlt(src, alt) {}
 gallery.addEventListener("click", onGalleryImgClick);
 function onGalleryImgClick(e) {
   if (!e.target.classList.contains("gallery__image")) {

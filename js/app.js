@@ -88,7 +88,10 @@ function galleryMarkup(array) {
     .join("");
 }
 gallery.insertAdjacentHTML("afterBegin", galleryImages);
-function setSrcAlt(src, alt) {}
+function setSrcAlt(src = "", alt = "") {
+  lightbox.src = src;
+  lightbox.alt = alt;
+}
 gallery.addEventListener("click", onGalleryImgClick);
 function onGalleryImgClick(e) {
   if (!e.target.classList.contains("gallery__image")) {
@@ -97,10 +100,7 @@ function onGalleryImgClick(e) {
     e.preventDefault();
   }
   modal.classList.add("is-open");
-  setSrcAlt(
-    (lightbox.src = e.target.dataset.source),
-    (lightbox.alt = e.target.alt)
-  );
+  setSrcAlt(e.target.dataset.source, e.target.alt);
 }
 closeOverlay.addEventListener("click", modalClose);
 closeBtn.addEventListener("click", modalClose);
